@@ -1,0 +1,52 @@
+$ docker build -t compileerrors .
+Sending build context to Docker daemon 74.24 kB
+Step 1 : FROM msaraiva/elixir-dev:1.2.1
+ ---> d0ab5b36e7be
+Step 2 : ADD . /app
+ ---> 803e35fd2279
+Removing intermediate container c3e9f8cb2d91
+Step 3 : WORKDIR /app
+ ---> Running in ec814c9b30fc
+ ---> c056af7bbd55
+Removing intermediate container ec814c9b30fc
+Step 4 : RUN mix local.hex -f
+ ---> Running in dc4eb9d41d1b
+Found existing archive(s): hex-0.10.4.ez.
+Are you sure you want to replace them? [Yn]  ---> df2f9ae2f7bf
+Removing intermediate container dc4eb9d41d1b
+Step 5 : RUN mix local.rebar -f
+ ---> Running in 02660d92efa4
+* creating /root/.mix/rebar
+* creating /root/.mix/rebar3
+ ---> 1c76cd4ce112
+Removing intermediate container 02660d92efa4
+Step 6 : RUN mix clean
+ ---> Running in f498860b3b9a
+ ---> 49d9a292deae
+Removing intermediate container f498860b3b9a
+Step 7 : RUN mix deps.get
+ ---> Running in 770dd3a4df56
+A new Hex version is available (0.11.3), please update with `mix local.hex`
+Running dependency resolution
+Dependency resolution completed
+  certifi: 0.4.0
+  idna: 1.2.0
+* Getting idna (Hex package)
+Checking package (https://s3.amazonaws.com/s3.hex.pm/tarballs/idna-1.2.0.tar)
+Fetched package
+* Getting certifi (Hex package)
+Checking package (https://s3.amazonaws.com/s3.hex.pm/tarballs/certifi-0.4.0.tar)
+Fetched package
+ ---> 70818b972eb5
+Removing intermediate container 770dd3a4df56
+Step 8 : RUN mix deps.compile
+ ---> Running in 133a00dfcab3
+==> idna (compile)
+Compiled src/idna_unicode.erl
+Compiled src/idna.erl
+Compiled src/idna_ucs.erl
+Compiled src/idna_unicode_data2.erl
+Compiled src/punycode.erl
+Killed
+** (Mix) Could not compile dependency :idna, "/root/.mix/rebar compile skip_deps=true deps_dir="/app/_build/dev/lib"" command failed. You can recompile this dependency with "mix deps.compile idna", update it with "mix deps.update idna" or clean it with "mix deps.clean idna"
+The command '/bin/sh -c mix deps.compile' returned a non-zero code: 1
